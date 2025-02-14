@@ -1,3 +1,11 @@
+const bgMusic = document.getElementById("bg-music");
+
+// Función para iniciar la música
+const playMusic = () => {
+  bgMusic.currentTime = 0; // Reinicia la música desde el inicio
+  bgMusic.play();
+};
+
 // Animation Timeline
 const animationTimeline = () => {
   // Spit chars that needs to be animated individually
@@ -272,6 +280,7 @@ const animationTimeline = () => {
   const replyBtn = document.getElementById("replay");
   replyBtn.addEventListener("click", () => {
     tl.restart();
+    playMusic(); 
   });
 };
 
@@ -303,3 +312,7 @@ const resolveFetch = () => {
 };
 
 resolveFetch().then(animationTimeline());
+
+document.addEventListener("DOMContentLoaded", () => {
+  playMusic();
+});
