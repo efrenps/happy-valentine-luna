@@ -8,19 +8,18 @@ const playMusic = () => {
   bgMusic.play().catch(error => console.log("Reproducción bloqueada:", error));
 };
 
-// Función para iniciar la animación
+// Función para iniciar la animación después del clic
 const startAnimation = () => {
   startScreen.style.display = "none"; // Oculta el botón de inicio
   playMusic();
-  animationTimeline();
+  animationTimeline(); // Inicia la animación SOLO después del clic
 };
 
-// Iniciar la animación y la música al hacer clic en el botón
+// Evento para iniciar la animación y la música al hacer clic en el botón
 startBtn.addEventListener("click", startAnimation);
 
-// Animation Timeline
+// Animation Timeline (deja esta función igual)
 const animationTimeline = () => {
-  // Spit chars that need to be animated individually
   const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
   const hbd = document.getElementsByClassName("wish-hbd")[0];
 
@@ -93,12 +92,12 @@ const animationTimeline = () => {
   });
 };
 
-// Import the data to customize and insert them into the page
+// Import the data to customize and insert them into page
 const fetchData = () => {
-  fetch("customize.json")
+  return fetch("customize.json")
     .then(data => data.json())
     .then(data => {
-      Object.keys(data).map(customData => {
+      Object.keys(data).forEach(customData => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
             document.getElementById(customData).setAttribute("src", data[customData]);
@@ -112,10 +111,8 @@ const fetchData = () => {
 
 // Run fetch and animation in sequence
 const resolveFetch = () => {
-  return new Promise((resolve) => {
-    fetchData();
-    resolve("Fetch done!");
-  });
+  return fetchData().then(() => console.log("Fetch done!"));
 };
 
+// Solo ejecutamos el fetch, pero NO la animación automáticamente
 resolveFetch();
